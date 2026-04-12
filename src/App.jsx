@@ -41,8 +41,8 @@ const App = () => {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center whitespace-nowrap gap-2 px-5 py-2.5 rounded-full transition-all duration-300 font-medium text-sm md:text-base ${activeTab === tab.id
-                    ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)] border border-blue-400/50 scale-105'
-                    : 'bg-transparent text-slate-400 hover:bg-slate-700/50 hover:text-slate-100 border border-transparent'
+                  ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)] border border-blue-400/50 scale-105'
+                  : 'bg-transparent text-slate-400 hover:bg-slate-700/50 hover:text-slate-100 border border-transparent'
                   }`}
               >
                 {tab.icon}
@@ -132,8 +132,8 @@ const BrainSection = () => {
               onClick={handleSmoke}
               disabled={isSmoking}
               className={`px-10 py-5 rounded-full font-bold text-xl transition-all duration-300 ${isSmoking
-                  ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
-                  : 'bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400 text-white hover:scale-105 shadow-[0_0_30px_rgba(249,115,22,0.4)] border border-orange-400/50'
+                ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
+                : 'bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400 text-white hover:scale-105 shadow-[0_0_30px_rgba(249,115,22,0.4)] border border-orange-400/50'
                 }`}
             >
               {isSmoking ? '正在吸收尼古丁...' : '点击模拟：吸一口烟'}
@@ -429,8 +429,21 @@ const CalculatorSection = () => {
   const [price, setPrice] = useState(25);
   const [packs, setPacks] = useState(1);
 
+  // 基础计算
   const dailyCost = price * packs;
   const yearlyCost = dailyCost * 365;
+
+  // 智能奖励匹配系统：根据金额自动分配不同的奖励文案和颜色
+  const getReward = (amount) => {
+    if (amount < 3000) return { text: "几顿豪华海鲜大餐", style: "text-blue-300 bg-blue-900/30 border-blue-800/50" };
+    if (amount < 8000) return { text: "一台高配平板电脑", style: "text-indigo-300 bg-indigo-900/30 border-indigo-800/50" };
+    if (amount < 15000) return { text: "一台顶级旗舰手机", style: "text-emerald-300 bg-emerald-900/30 border-emerald-800/50" };
+    if (amount < 50000) return { text: "一次豪华海外双人游", style: "text-teal-300 bg-teal-900/30 border-teal-800/50" };
+    if (amount < 150000) return { text: "一辆不错的代步汽车", style: "text-yellow-300 bg-yellow-900/30 border-yellow-800/50" };
+    if (amount < 300000) return { text: "一辆豪华品牌B级车", style: "text-orange-300 bg-orange-900/30 border-orange-800/50" };
+    if (amount < 800000) return { text: "二三线城市一套首付", style: "text-rose-300 bg-rose-900/30 border-rose-800/50" };
+    return { text: "一笔丰厚的提前退休金", style: "text-fuchsia-300 bg-fuchsia-900/30 border-fuchsia-800/50" };
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
@@ -449,7 +462,7 @@ const CalculatorSection = () => {
         </p>
 
         <div className="grid lg:grid-cols-2 gap-10 relative z-10">
-          {/* 控制器面板 */}
+          {/* 左侧：控制器面板 */}
           <div className="space-y-8 bg-slate-900/80 p-8 rounded-3xl border border-slate-700/50 shadow-xl">
             <div>
               <label className="flex justify-between text-base text-slate-400 mb-4">
@@ -481,44 +494,36 @@ const CalculatorSection = () => {
             </div>
           </div>
 
-          {/* 计算结果区 */}
+          {/* 右侧：动态计算结果区 */}
           <div className="space-y-4">
             <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
               <Coins size={28} className="text-yellow-400" />
               这笔钱的未来价值
             </h3>
 
-            <div className="group bg-slate-900/80 p-5 rounded-2xl border border-slate-700/50 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 hover:border-blue-500/40 transition-colors hover:shadow-lg hover:shadow-blue-900/10">
-              <div>
-                <div className="text-slate-400 text-sm mb-1">1年后可省下</div>
-                <div className="text-white font-bold text-2xl tracking-wide">¥ {yearlyCost.toLocaleString()}</div>
-              </div>
-              <div className="text-sm font-medium text-blue-300 bg-blue-900/30 px-4 py-2 rounded-full border border-blue-800/50 text-center">一台顶级旗舰手机</div>
-            </div>
+            {[
+              { label: "1年后可省下", years: 1 },
+              { label: "5年后可省下", years: 5 },
+              { label: "10年后可省下", years: 10 },
+              { label: "20年后可省下", years: 20 },
+            ].map((item, index) => {
+              const totalAmount = yearlyCost * item.years;
+              const reward = getReward(totalAmount);
 
-            <div className="group bg-slate-900/80 p-5 rounded-2xl border border-slate-700/50 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 hover:border-emerald-500/40 transition-colors hover:shadow-lg hover:shadow-emerald-900/10">
-              <div>
-                <div className="text-slate-400 text-sm mb-1">5年后可省下</div>
-                <div className="text-white font-bold text-2xl tracking-wide">¥ {(yearlyCost * 5).toLocaleString()}</div>
-              </div>
-              <div className="text-sm font-medium text-emerald-300 bg-emerald-900/30 px-4 py-2 rounded-full border border-emerald-800/50 text-center">一次豪华海外双人游</div>
-            </div>
-
-            <div className="group bg-slate-900/80 p-5 rounded-2xl border border-slate-700/50 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 hover:border-yellow-500/40 transition-colors hover:shadow-lg hover:shadow-yellow-900/10">
-              <div>
-                <div className="text-slate-400 text-sm mb-1">10年后可省下</div>
-                <div className="text-yellow-400 font-bold text-3xl tracking-wide">¥ {(yearlyCost * 10).toLocaleString()}</div>
-              </div>
-              <div className="text-sm font-medium text-yellow-300 bg-yellow-900/30 px-4 py-2 rounded-full border border-yellow-800/50 text-center">一辆不错的代步汽车</div>
-            </div>
-
-            <div className="group bg-slate-900/80 p-5 rounded-2xl border border-slate-700/50 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 hover:border-orange-500/40 transition-colors hover:shadow-lg hover:shadow-orange-900/10">
-              <div>
-                <div className="text-slate-400 text-sm mb-1">20年后可省下</div>
-                <div className="text-orange-400 font-bold text-3xl tracking-wide">¥ {(yearlyCost * 20).toLocaleString()}</div>
-              </div>
-              <div className="text-sm font-medium text-orange-300 bg-orange-900/30 px-4 py-2 rounded-full border border-orange-800/50 text-center">二三线城市一套首付</div>
-            </div>
+              return (
+                <div key={index} className="group bg-slate-900/80 p-5 rounded-2xl border border-slate-700/50 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 hover:border-slate-500/40 transition-all duration-300 hover:shadow-lg">
+                  <div>
+                    <div className="text-slate-400 text-sm mb-1">{item.label}</div>
+                    <div className="text-white font-bold text-2xl tracking-wide transition-all">
+                      ¥ {totalAmount.toLocaleString()}
+                    </div>
+                  </div>
+                  <div className={`text-sm font-medium px-4 py-2 rounded-full border text-center transition-all duration-500 ${reward.style}`}>
+                    {reward.text}
+                  </div>
+                </div>
+              );
+            })}
 
             <p className="text-sm text-slate-500 text-right mt-4 italic">* 未包含通货膨胀和理财复利，实际损失将更惊人。</p>
           </div>
