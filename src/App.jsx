@@ -19,7 +19,7 @@ const App = () => {
             抽烟的悖论
           </h1>
           <p className="text-xl md:text-2xl text-slate-400 font-light max-w-2xl mx-auto leading-relaxed">
-            短暂的愉悦 <span className="text-slate-600 mx-2">|</span> 长期的代价<br/>
+            短暂的愉悦 <span className="text-slate-600 mx-2">|</span> 长期的代价<br />
             <span className="text-base md:text-lg text-slate-500 mt-3 block font-normal">一场关于尼古丁、多巴胺与身体器官的隐秘博弈</span>
           </p>
         </header>
@@ -40,11 +40,10 @@ const App = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center whitespace-nowrap gap-2 px-5 py-2.5 rounded-full transition-all duration-300 font-medium text-sm md:text-base ${
-                  activeTab === tab.id
+                className={`flex items-center whitespace-nowrap gap-2 px-5 py-2.5 rounded-full transition-all duration-300 font-medium text-sm md:text-base ${activeTab === tab.id
                     ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)] border border-blue-400/50 scale-105'
                     : 'bg-transparent text-slate-400 hover:bg-slate-700/50 hover:text-slate-100 border border-transparent'
-                }`}
+                  }`}
               >
                 {tab.icon}
                 {tab.label}
@@ -69,7 +68,7 @@ const App = () => {
         <footer className="border-t border-slate-800/50 bg-slate-900/30 backdrop-blur-sm py-12 text-center text-slate-500">
           <div className="max-w-4xl mx-auto px-6">
             <p className="flex items-center justify-center gap-2 mb-2 text-slate-400">
-              <Heart size={16} className="text-red-500 animate-pulse" /> 
+              <Heart size={16} className="text-red-500 animate-pulse" />
               <span>为了您和家人的健康，请尽早戒烟。</span>
             </p>
             <p className="text-sm opacity-50">交互式医学科普演示 · 抽烟的悖论</p>
@@ -123,20 +122,19 @@ const BrainSection = () => {
         <p className="text-slate-300 leading-relaxed text-lg md:text-xl mb-10 relative z-10">
           为什么人们会觉得抽烟很爽？答案是<strong className="text-blue-300 font-semibold mx-1">尼古丁</strong>。当吸入烟雾时，尼古丁通过肺部进入血液，只需7到10秒就能冲破血脑屏障，到达大脑。它伪装成神经递质“乙酰胆碱”，强行开启大脑的“奖赏中心”，促使大脑瞬间释放大量的<strong className="text-blue-300 font-semibold mx-1">多巴胺</strong>。
         </p>
-        
+
         {/* 交互模拟器 */}
         <div className="mt-12 p-8 md:p-10 bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-700/50 shadow-[inset_0_0_30px_rgba(0,0,0,0.5)] relative z-10">
           <h3 className="text-xl md:text-2xl font-bold mb-8 text-center text-white">互动演示：多巴胺水平模拟器</h3>
-          
+
           <div className="flex flex-col items-center gap-8">
-            <button 
+            <button
               onClick={handleSmoke}
               disabled={isSmoking}
-              className={`px-10 py-5 rounded-full font-bold text-xl transition-all duration-300 ${
-                isSmoking 
-                  ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700' 
+              className={`px-10 py-5 rounded-full font-bold text-xl transition-all duration-300 ${isSmoking
+                  ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
                   : 'bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400 text-white hover:scale-105 shadow-[0_0_30px_rgba(249,115,22,0.4)] border border-orange-400/50'
-              }`}
+                }`}
             >
               {isSmoking ? '正在吸收尼古丁...' : '点击模拟：吸一口烟'}
             </button>
@@ -147,10 +145,9 @@ const BrainSection = () => {
                 <span className={`text-lg font-bold ${status.color}`}>{Math.round(dopamine)}%</span>
               </div>
               <div className="h-8 w-full bg-slate-900 rounded-full overflow-hidden border border-slate-700/50 shadow-inner p-1">
-                <div 
-                  className={`h-full rounded-full transition-all duration-100 ease-linear ${
-                    dopamine > 50 ? 'bg-gradient-to-r from-blue-500 via-teal-400 to-emerald-400' : 'bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500'
-                  }`}
+                <div
+                  className={`h-full rounded-full transition-all duration-100 ease-linear ${dopamine > 50 ? 'bg-gradient-to-r from-blue-500 via-teal-400 to-emerald-400' : 'bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500'
+                    }`}
                   style={{ width: `${dopamine}%` }}
                 ></div>
               </div>
@@ -174,7 +171,7 @@ const BodySection = () => {
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
       <div className="bg-slate-800/40 backdrop-blur-md p-8 md:p-12 rounded-[2.5rem] border border-slate-700/50 shadow-2xl relative overflow-hidden">
         <div className="absolute -top-24 -right-24 w-72 h-72 bg-red-500/10 blur-[100px] rounded-full pointer-events-none"></div>
-        
+
         <div className="flex items-center gap-5 mb-8 relative z-10">
           <div className="p-4 bg-gradient-to-br from-red-500/20 to-orange-500/20 text-red-400 rounded-2xl border border-red-500/20 shadow-[0_0_15px_rgba(239,68,68,0.2)]">
             <ShieldAlert size={36} />
@@ -195,7 +192,7 @@ const BodySection = () => {
               烟雾中含有数千种化学物质（包括焦油、氨气等）。它们会直接刺激呼吸道黏膜，破坏气管内负责清扫灰尘的纤毛。咳嗽是肺部试图排出毒素的绝望尝试。
             </p>
           </div>
-          
+
           <div className="group bg-slate-900/80 p-8 rounded-3xl border border-slate-700/50 hover:border-yellow-500/50 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-yellow-900/20">
             <div className="bg-yellow-500/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 group-hover:bg-yellow-500/20">
               <Activity className="text-yellow-400" size={32} />
@@ -205,7 +202,7 @@ const BodySection = () => {
               烟雾中的<strong className="text-yellow-200 font-semibold mx-1">一氧化碳</strong>会抢夺血液中的氧气，导致大脑瞬间缺氧而产生头晕。同时，尼古丁会刺激肾上腺素分泌，导致心跳异常加速、血压升高。
             </p>
           </div>
-          
+
           <div className="group bg-slate-900/80 p-8 rounded-3xl border border-slate-700/50 md:col-span-2 hover:border-orange-500/50 transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-orange-900/20 flex flex-col md:flex-row gap-8 items-start">
             <div className="bg-orange-500/10 w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-500 group-hover:bg-orange-500/20">
               <AlertTriangle className="text-orange-400" size={32} />
@@ -242,7 +239,7 @@ const CycleSection = () => {
         <div className="relative z-10">
           {/* 桌面端连接线 */}
           <div className="hidden md:block absolute top-24 left-10 right-10 h-1.5 bg-gradient-to-r from-blue-900 via-yellow-900 to-red-900 rounded-full z-0 opacity-50"></div>
-          
+
           <div className="grid md:grid-cols-3 gap-8 md:gap-6 relative z-10">
             {/* Step 1 */}
             <div className="bg-slate-900/90 p-8 rounded-3xl border border-slate-700/80 shadow-xl relative group hover:-translate-y-2 transition-transform duration-500">
@@ -272,7 +269,7 @@ const CycleSection = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="mt-16 bg-gradient-to-r from-slate-900 to-slate-800 p-8 rounded-2xl border border-slate-700 shadow-inner relative z-10 flex items-center gap-6">
           <div className="hidden md:block w-1.5 h-16 bg-purple-500 rounded-full"></div>
           <p className="text-xl md:text-2xl italic text-slate-300 font-medium">
@@ -305,7 +302,7 @@ const PsychologySection = () => {
             <div className="inline-block px-4 py-1.5 bg-pink-500/10 text-pink-400 rounded-full text-sm font-bold mb-4 border border-pink-500/20">谎言一</div>
             <h3 className="text-2xl font-bold mb-4 text-white">“抽烟能缓解压力”</h3>
             <p className="text-slate-400 leading-relaxed text-lg">
-              很多烟民遇到烦心事就点一根烟，觉得压力减轻了。实际上，<strong className="text-pink-200 font-semibold">医学测试表明，吸烟者的平均基础压力水平高于非吸烟者。</strong> 抽烟时感觉到的“放松”，其实是因为抽烟时的**深呼吸**动作，以及尼古丁暂时解除了你因缺烟而产生的戒断焦虑。
+              很多烟民遇到烦心事就点一根烟，觉得压力减轻了。实际上，<strong className="text-pink-200 font-semibold">医学测试表明，吸烟者的平均基础压力水平高于非吸烟者。</strong> 抽烟时感觉到的“放松”，其实是因为抽烟时的<strong className="text-pink-200 font-semibold mx-1">深呼吸</strong>动作，以及尼古丁暂时解除了你因缺烟而产生的戒断焦虑。
             </p>
           </div>
           <div className="bg-slate-900/80 p-8 rounded-3xl border border-slate-700/50 hover:border-pink-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-pink-900/20">
@@ -412,7 +409,7 @@ const LongTermSection = () => {
           </div>
 
           <div className="group flex flex-col md:flex-row items-center md:items-start gap-6 bg-slate-900/80 p-8 rounded-3xl border border-slate-700/50 hover:border-emerald-500/40 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-900/10">
-             <div className="p-5 bg-emerald-900/30 rounded-2xl group-hover:scale-110 transition-transform duration-500">
+            <div className="p-5 bg-emerald-900/30 rounded-2xl group-hover:scale-110 transition-transform duration-500">
               <ShieldAlert size={40} className="text-emerald-400" />
             </div>
             <div className="w-full text-center md:text-left">
@@ -446,7 +443,7 @@ const CalculatorSection = () => {
           </div>
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white">点燃的健康与财富</h2>
         </div>
-        
+
         <p className="text-slate-300 mb-10 text-lg md:text-xl relative z-10">
           我们常常忽略了每天几十块钱的开销。算一算，如果不抽烟，这些钱能为你买到什么？
         </p>
@@ -459,20 +456,20 @@ const CalculatorSection = () => {
                 <span>每包烟平均价格</span>
                 <span className="font-bold text-yellow-400 text-xl bg-yellow-400/10 px-3 py-1 rounded-lg">¥ {price}</span>
               </label>
-              <input 
-                type="range" min="10" max="100" step="5" 
+              <input
+                type="range" min="10" max="100" step="5"
                 value={price} onChange={(e) => setPrice(Number(e.target.value))}
                 className="w-full accent-yellow-400 h-3 bg-slate-800 rounded-lg appearance-none cursor-pointer border border-slate-700"
               />
             </div>
-            
+
             <div>
               <label className="flex justify-between text-base text-slate-400 mb-4">
                 <span>平均每天消耗量</span>
                 <span className="font-bold text-yellow-400 text-xl bg-yellow-400/10 px-3 py-1 rounded-lg">{packs} 包</span>
               </label>
-              <input 
-                type="range" min="0.5" max="3" step="0.5" 
+              <input
+                type="range" min="0.5" max="3" step="0.5"
                 value={packs} onChange={(e) => setPacks(Number(e.target.value))}
                 className="w-full accent-yellow-400 h-3 bg-slate-800 rounded-lg appearance-none cursor-pointer border border-slate-700"
               />
@@ -490,7 +487,7 @@ const CalculatorSection = () => {
               <Coins size={28} className="text-yellow-400" />
               这笔钱的未来价值
             </h3>
-            
+
             <div className="group bg-slate-900/80 p-5 rounded-2xl border border-slate-700/50 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 hover:border-blue-500/40 transition-colors hover:shadow-lg hover:shadow-blue-900/10">
               <div>
                 <div className="text-slate-400 text-sm mb-1">1年后可省下</div>
@@ -522,7 +519,7 @@ const CalculatorSection = () => {
               </div>
               <div className="text-sm font-medium text-orange-300 bg-orange-900/30 px-4 py-2 rounded-full border border-orange-800/50 text-center">二三线城市一套首付</div>
             </div>
-            
+
             <p className="text-sm text-slate-500 text-right mt-4 italic">* 未包含通货膨胀和理财复利，实际损失将更惊人。</p>
           </div>
         </div>
@@ -549,7 +546,7 @@ const QuitSection = () => {
 
         {/* 垂直时间轴 */}
         <div className="relative border-l-4 border-slate-700/50 ml-4 md:ml-8 space-y-12 pb-8 relative z-10">
-          
+
           <div className="relative pl-10 md:pl-12 group">
             <div className="absolute -left-[14px] top-1 w-6 h-6 rounded-full bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.8)] border-4 border-slate-900 group-hover:scale-125 transition-transform duration-300"></div>
             <h3 className="text-xl md:text-2xl font-bold text-emerald-400 mb-3">20 分钟后</h3>
