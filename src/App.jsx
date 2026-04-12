@@ -429,20 +429,45 @@ const CalculatorSection = () => {
   const [price, setPrice] = useState(25);
   const [packs, setPacks] = useState(1);
 
-  // 基础计算
+  // 基础开销计算
   const dailyCost = price * packs;
   const yearlyCost = dailyCost * 365;
 
-  // 智能奖励匹配系统：根据金额自动分配不同的奖励文案和颜色
-  const getReward = (amount) => {
-    if (amount < 3000) return { text: "几顿豪华海鲜大餐", style: "text-blue-300 bg-blue-900/30 border-blue-800/50" };
-    if (amount < 8000) return { text: "一台高配平板电脑", style: "text-indigo-300 bg-indigo-900/30 border-indigo-800/50" };
-    if (amount < 15000) return { text: "一台顶级旗舰手机", style: "text-emerald-300 bg-emerald-900/30 border-emerald-800/50" };
-    if (amount < 50000) return { text: "一次豪华海外双人游", style: "text-teal-300 bg-teal-900/30 border-teal-800/50" };
-    if (amount < 150000) return { text: "一辆不错的代步汽车", style: "text-yellow-300 bg-yellow-900/30 border-yellow-800/50" };
-    if (amount < 300000) return { text: "一辆豪华品牌B级车", style: "text-orange-300 bg-orange-900/30 border-orange-800/50" };
-    if (amount < 800000) return { text: "二三线城市一套首付", style: "text-rose-300 bg-rose-900/30 border-rose-800/50" };
-    return { text: "一笔丰厚的提前退休金", style: "text-fuchsia-300 bg-fuchsia-900/30 border-fuchsia-800/50" };
+  // 1. 真实生活物价库（价格单价）
+  const REWARD_ITEMS = [
+    { price: 30, name: "杯高端咖啡", icon: "☕", style: "text-amber-300 bg-amber-900/30 border-amber-800/50" },
+    { price: 2000, name: "双限量版潮鞋", icon: "👟", style: "text-blue-300 bg-blue-900/30 border-blue-800/50" },
+    { price: 8000, name: "部顶级旗舰手机", icon: "📱", style: "text-emerald-300 bg-emerald-900/30 border-emerald-800/50" },
+    { price: 20000, name: "台顶配生产力电脑", icon: "💻", style: "text-cyan-300 bg-cyan-900/30 border-cyan-800/50" },
+    { price: 50000, name: "次海外豪华双人游", icon: "✈️", style: "text-teal-300 bg-teal-900/30 border-teal-800/50" },
+    { price: 120000, name: "辆家用代步汽车", icon: "🚗", style: "text-yellow-300 bg-yellow-900/30 border-yellow-800/50" },
+    { price: 300000, name: "辆豪华B级轿车", icon: "🏎️", style: "text-orange-300 bg-orange-900/30 border-orange-800/50" },
+    { price: 600000, name: "套核心区房产首付", icon: "🏠", style: "text-rose-300 bg-rose-900/30 border-rose-800/50" },
+    { price: 1500000, name: "套全款精装房产", icon: "🏡", style: "text-purple-300 bg-purple-900/30 border-purple-800/50" }
+  ];
+
+  // 2. 动态换算逻辑：算出这笔钱最适合买什么，能买几个
+  const getEquivalents = (amount) => {
+    // 过滤出买得起，且数量在合理展示范围内的物品 (避免出现"买10000杯咖啡"这样冲击力变弱的提示)
+    let affordables = REWARD_ITEMS.filter(item => amount >= item.price && (amount / item.price) <= 60);
+
+    // 如果金额大到连最贵的东西都能买几十个，直接取最贵的
+    if (affordables.length === 0) {
+      const maxItem = REWARD_ITEMS[REWARD_ITEMS.length - 1];
+      return [{ ...maxItem, count: Math.floor(amount / maxItem.price) }];
+    }
+
+    // 返回价值最大的前两种可购买组合（比如既显示能买几台电脑，也显示能买几部手机）
+    return affordables.slice(-2).reverse().map(item => ({
+      ...item,
+      count: Math.floor(amount / item.price)
+    }));
+  };
+
+  // 3. 复利计算器（年金终值公式，假设 4% 的保守年化理财收益）
+  const calculateCompound = (years) => {
+    const rate = 0.04;
+    return Math.round(yearlyCost * (Math.pow(1 + rate, years) - 1) / rate);
   };
 
   return (
@@ -458,12 +483,12 @@ const CalculatorSection = () => {
         </div>
 
         <p className="text-slate-300 mb-10 text-lg md:text-xl relative z-10">
-          我们常常忽略了每天几十块钱的开销。算一算，如果不抽烟，这些钱能为你买到什么？
+          除了看得见的烟钱，你还损失了这笔钱本可以带来的<strong className="text-yellow-400 mx-1">理财收益（机会成本）</strong>。
         </p>
 
-        <div className="grid lg:grid-cols-2 gap-10 relative z-10">
+        <div className="grid lg:grid-cols-12 gap-10 relative z-10">
           {/* 左侧：控制器面板 */}
-          <div className="space-y-8 bg-slate-900/80 p-8 rounded-3xl border border-slate-700/50 shadow-xl">
+          <div className="lg:col-span-5 space-y-8 bg-slate-900/80 p-8 rounded-3xl border border-slate-700/50 shadow-xl h-fit sticky top-24">
             <div>
               <label className="flex justify-between text-base text-slate-400 mb-4">
                 <span>每包烟平均价格</span>
@@ -482,50 +507,64 @@ const CalculatorSection = () => {
                 <span className="font-bold text-yellow-400 text-xl bg-yellow-400/10 px-3 py-1 rounded-lg">{packs} 包</span>
               </label>
               <input
-                type="range" min="0.5" max="3" step="0.5"
+                type="range" min="0.5" max="4" step="0.5"
                 value={packs} onChange={(e) => setPacks(Number(e.target.value))}
                 className="w-full accent-yellow-400 h-3 bg-slate-800 rounded-lg appearance-none cursor-pointer border border-slate-700"
               />
             </div>
 
-            <div className="p-6 bg-gradient-to-r from-yellow-900/40 to-amber-900/20 rounded-2xl border border-yellow-700/50 flex items-center justify-between shadow-[inset_0_0_20px_rgba(234,179,8,0.1)] mt-8">
-              <span className="text-slate-300 text-lg">每日烧钱：</span>
-              <span className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-yellow-300 to-yellow-600">¥ {dailyCost}</span>
+            <div className="p-6 bg-gradient-to-r from-yellow-900/40 to-amber-900/20 rounded-2xl border border-yellow-700/50 flex flex-col justify-center shadow-[inset_0_0_20px_rgba(234,179,8,0.1)] mt-8 gap-2">
+              <div className="flex justify-between items-center">
+                <span className="text-slate-300">每日直接烧钱：</span>
+                <span className="text-2xl font-black text-white">¥ {dailyCost}</span>
+              </div>
+              <div className="flex justify-between items-center border-t border-yellow-800/50 pt-2 mt-1">
+                <span className="text-slate-400 text-sm">每年浪费本金：</span>
+                <span className="text-lg font-bold text-yellow-500">¥ {yearlyCost.toLocaleString()}</span>
+              </div>
             </div>
           </div>
 
-          {/* 右侧：动态计算结果区 */}
-          <div className="space-y-4">
+          {/* 右侧：动态计算结果区 (含复利与动态等价物) */}
+          <div className="lg:col-span-7 space-y-5">
             <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
               <Coins size={28} className="text-yellow-400" />
-              这笔钱的未来价值
+              这笔钱的真实未来价值
             </h3>
 
-            {[
-              { label: "1年后可省下", years: 1 },
-              { label: "5年后可省下", years: 5 },
-              { label: "10年后可省下", years: 10 },
-              { label: "20年后可省下", years: 20 },
-            ].map((item, index) => {
-              const totalAmount = yearlyCost * item.years;
-              const reward = getReward(totalAmount);
+            {[1, 5, 10, 20].map((years, index) => {
+              const principal = yearlyCost * years;
+              const compoundTotal = calculateCompound(years);
+              const rewards = getEquivalents(compoundTotal);
 
               return (
-                <div key={index} className="group bg-slate-900/80 p-5 rounded-2xl border border-slate-700/50 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 hover:border-slate-500/40 transition-all duration-300 hover:shadow-lg">
-                  <div>
-                    <div className="text-slate-400 text-sm mb-1">{item.label}</div>
-                    <div className="text-white font-bold text-2xl tracking-wide transition-all">
-                      ¥ {totalAmount.toLocaleString()}
+                <div key={index} className="group bg-slate-900/80 p-6 rounded-2xl border border-slate-700/50 flex flex-col gap-5 hover:border-slate-500/40 transition-all duration-300 hover:shadow-xl relative overflow-hidden">
+
+                  {/* 金额展示区 */}
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <div className="text-slate-400 text-sm mb-1">{years} 年后 <span className="text-yellow-600/80 ml-1 text-xs">(含4%保守理财复利)</span></div>
+                      <div className="text-white font-black text-3xl tracking-wide">
+                        ¥ {compoundTotal.toLocaleString()}
+                      </div>
+                      <div className="text-slate-500 text-xs mt-1">如果全存起来，纯本金为 ¥{principal.toLocaleString()}</div>
                     </div>
                   </div>
-                  <div className={`text-sm font-medium px-4 py-2 rounded-full border text-center transition-all duration-500 ${reward.style}`}>
-                    {reward.text}
+
+                  {/* 动态智能奖励换算 */}
+                  <div className="flex flex-wrap gap-2 md:gap-3 border-t border-slate-800 pt-4">
+                    <span className="text-slate-400 text-sm self-center mr-2">约等于可购买：</span>
+                    {rewards.map((r, i) => (
+                      <div key={i} className={`flex items-center gap-2 text-sm font-bold px-3 py-1.5 rounded-full border transition-transform duration-300 group-hover:-translate-y-0.5 ${r.style}`}>
+                        <span className="text-base">{r.icon}</span>
+                        <span>{r.count} {r.name}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               );
             })}
 
-            <p className="text-sm text-slate-500 text-right mt-4 italic">* 未包含通货膨胀和理财复利，实际损失将更惊人。</p>
           </div>
         </div>
       </div>
