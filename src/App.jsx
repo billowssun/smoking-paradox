@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Brain, Activity, RefreshCcw, AlertTriangle, Wind, Heart, ShieldAlert, Zap } from 'lucide-react';
 
-const SmokingParadox = () => {
+const App = () => {
   const [activeTab, setActiveTab] = useState('brain');
 
   return (
@@ -89,7 +89,7 @@ const BrainSection = () => {
           <h2 className="text-3xl font-bold">只需7秒的“多巴胺劫持”</h2>
         </div>
         <p className="text-slate-300 leading-relaxed text-lg mb-6">
-          为什么人们会觉得抽烟很爽？答案是**尼古丁**。当吸入烟雾时，尼古丁通过肺部进入血液，只需7到10秒就能冲破血脑屏障，到达大脑。它伪装成神经递质“乙酰胆碱”，强行开启大脑的“奖赏中心”，促使大脑瞬间释放大量的**多巴胺**。
+          为什么人们会觉得抽烟很爽？答案是<strong className="text-white font-semibold">尼古丁</strong>。当吸入烟雾时，尼古丁通过肺部进入血液，只需7到10秒就能冲破血脑屏障，到达大脑。它伪装成神经递质“乙酰胆碱”，强行开启大脑的“奖赏中心”，促使大脑瞬间释放大量的<strong className="text-white font-semibold">多巴胺</strong>。
         </p>
         
         {/* Interactive Simulator */}
@@ -162,7 +162,7 @@ const BodySection = () => {
             <Activity className="text-yellow-400 mb-4" size={32} />
             <h3 className="text-xl font-bold mb-2">头晕与心悸（醉烟）</h3>
             <p className="text-slate-400">
-              烟雾中的**一氧化碳**会抢夺血液中的氧气，导致大脑瞬间缺氧而产生头晕（俗称醉烟）。同时，尼古丁会刺激肾上腺素分泌，导致心跳异常加速、血压升高。
+              烟雾中的<strong className="text-white font-semibold">一氧化碳</strong>会抢夺血液中的氧气，导致大脑瞬间缺氧而产生头晕（俗称醉烟）。同时，尼古丁会刺激肾上腺素分泌，导致心跳异常加速、血压升高。
             </p>
           </div>
           <div className="bg-slate-900 p-6 rounded-2xl border border-slate-700 md:col-span-2">
@@ -189,7 +189,7 @@ const CycleSection = () => {
           <h2 className="text-3xl font-bold">完美的陷阱：耐受与戒断</h2>
         </div>
         <p className="text-slate-300 leading-relaxed text-lg mb-12">
-          抽烟不仅是一个生理过程，更是一个被尼古丁精心设计的“恶性循环”。很多人以为抽烟是为了“缓解压力”，但实际上，抽烟缓解的**只是由上一根烟引起的戒断压力**。
+          抽烟不仅是一个生理过程，更是一个被尼古丁精心设计的“恶性循环”。很多人以为抽烟是为了“缓解压力”，但实际上，抽烟缓解的<strong className="text-white font-semibold">只是由上一根烟引起的戒断压力</strong>。
         </p>
 
         <div className="relative">
@@ -202,7 +202,7 @@ const CycleSection = () => {
               <div className="absolute -top-4 -left-4 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xl border-4 border-slate-900">1</div>
               <h3 className="text-xl font-bold mb-3 text-blue-400">耐受性建立</h3>
               <p className="text-slate-400 text-sm">
-                随着长期吸烟，大脑为了保护自己，会减少多巴胺受体的数量。这意味着，你需要抽**更多、更频繁**的烟，才能达到当初一根烟带来的愉悦感。
+                随着长期吸烟，大脑为了保护自己，会减少多巴胺受体的数量。这意味着，你需要抽<strong className="text-white font-semibold">更多、更频繁</strong>的烟，才能达到当初一根烟带来的愉悦感。
               </p>
             </div>
 
@@ -220,7 +220,7 @@ const CycleSection = () => {
               <div className="absolute -top-4 -left-4 w-10 h-10 bg-red-600 text-white rounded-full flex items-center justify-center font-bold text-xl border-4 border-slate-900">3</div>
               <h3 className="text-xl font-bold mb-3 text-red-400">虚假的“解压”</h3>
               <p className="text-slate-400 text-sm">
-                为了消除这种极度的烦躁，你点燃了下一根烟。尼古丁重新进入大脑，消除了戒断反应。你以为抽烟让你“放松”了，其实它只是把**它自己造成的痛苦暂时移除**罢了。
+                为了消除这种极度的烦躁，你点燃了下一根烟。尼古丁重新进入大脑，消除了戒断反应。你以为抽烟让你“放松”了，其实它只是把<strong className="text-white font-semibold">它自己造成的痛苦暂时移除</strong>罢了。
               </p>
             </div>
           </div>
@@ -300,4 +300,4 @@ const LongTermSection = () => {
   );
 };
 
-export default SmokingParadox;
+export default App;
