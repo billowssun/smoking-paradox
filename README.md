@@ -1,16 +1,40 @@
-# React + Vite
+# 抽烟的悖论
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+一个交互式戒烟医学科普 Web 应用，通过可视化演示揭示吸烟对大脑、身体与财富的真实危害。
 
-Currently, two official plugins are available:
+## 功能模块
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **大脑骗局** — 互动式多巴胺水平模拟器，展示尼古丁如何在 7 秒内劫持大脑奖赏系统
+- **身体抗议** — 解析初吸烟时的咳嗽、头晕、恶心等身体防御反应
+- **成瘾循环** — 3 步图解耐受性建立 → 戒断反应 → 虚假解压的恶性循环
+- **心理陷阱** — 揭露"吸烟减压"和"递烟社交"两大谎言
+- **电子烟迷思** — 分析尼古丁盐技术与未知化学风险
+- **长期代价** — 器官级别的损伤展示（肺、心血管、免疫系统）
+- **财富账单** — 烟钱复利计算器，含真实生活等价物换算
+- **戒烟奇迹** — 从 20 分钟到 10 年的身体修复时间线
 
-## React Compiler
+## 技术栈
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19** + **Vite 8**
+- **Tailwind CSS 4** (via @tailwindcss/vite)
+- **Lucide React** 图标库
 
-## Expanding the ESLint configuration
+## 本地开发
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
+npm run dev
+```
+
+## 构建部署
+
+```bash
+npm run build
+npm run preview
+```
+
+## 代码检查
+
+```bash
+npm run lint
+```
